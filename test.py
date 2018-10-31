@@ -1,50 +1,31 @@
 # -*- coding: utf-8 -*-
-
-from LineAPI.akad.ttypes import Message
-from LineAPI.akad.ttypes import ContentType as Type
-from LineAPI.akad.ttypes import ChatRoomAnnouncementContents
+from Linephu.linepy import *
+from Linephu.akad.ttypes import Message
+from Linephu.akad.ttypes import ContentType as Type
+from Linephu.akad.ttypes import ChatRoomAnnouncementContents
+from Linephu.akad.ttypes import ChatRoomAnnouncement
 from datetime import datetime, timedelta
 from time import sleep
 from bs4 import BeautifulSoup
 from humanfriendly import format_timespan, format_size, format_number, format_length
-from gtts import gTTS
-from threading import Thread
-from io import StringIO
-from multiprocessing import Pool
-from googletrans import Translator
-from urllib.parse import urlencode
-from wikiapi import WikiApi
-import subprocess as cmd
-import time, random, sys, json, codecs, threading, glob, re, string, os, requests, six, ast, pytz, wikipedia, urllib, urllib.parse, atexit, asyncio, traceback
+import time, random, sys, json, codecs, threading, glob, re, string, os, requests, subprocess, six, ast, pytz, urllib, urllib.parse, ffmpy, wikipedia, atexit, datetime, pafy, youtube_dl
 _session = requests.session()
-try:
-    import urllib.request as urllib2
-except ImportError:
-    import urllib2
-
-try:
-    with open("token.txt","r") as tokens:
-        token = tokens.read()
-    print (str(token))
-except Exception as e:
-    print (str(e))
-    
-readOpen = codecs.open("read.json","r","utf-8")
-settingsOpen = codecs.open("temp.json","r","utf-8")
-imagesOpen = codecs.open("image.json","r","utf-8")
-stickersOpen = codecs.open("sticker.json","r","utf-8")
+from gtts import gTTS
+from googletrans import Translator
 
 client = LINE()
 #client = LINE("")
-cl = client
+
 clientProfile = client.getProfile()
 clientSettings = client.getSettings()
 clientPoll = OEPoll(client)
 clientMID = client.profile.mid
+
 myBot = [clientMID]
 loop = asyncio.get_event_loop()
 botStart = time.time()
 admin = [clientMID]
+
 temp_flood = {}
 groupName = {}
 groupImage = {}
@@ -61,6 +42,11 @@ cont = client.getContact(clientMID)
 settings["myProfile"]["videoProfile"] = cont.videoProfile
 coverId = client.getProfileDetail()["result"]["objectId"]
 settings["myProfile"]["coverId"] = coverId
+
+readOpen = codecs.open("read.json","r","utf-8")
+settingsOpen = codecs.open("temp.json","r","utf-8")
+imagesOpen = codecs.open("image.json","r","utf-8")
+stickersOpen = codecs.open("sticker.json","r","utf-8")
 
 with open("/root/moeself/temp.json", "r", encoding="utf_8_sig") as f:
     anu = json.loads(f.read())
